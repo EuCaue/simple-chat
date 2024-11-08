@@ -34,6 +34,15 @@
   width: 100%;
 }
 
+.message-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin-right: 0.525rem;
+  }
+}
+
 .mb {
   margin-bottom: 1em;
 }

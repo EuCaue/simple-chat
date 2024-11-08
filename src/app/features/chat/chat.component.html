@@ -1,0 +1,41 @@
+<main id="chat-container">
+  <div id="history" class="mb">
+    <div *ngFor="let chat of chats" class="mb">
+      <mat-card>
+        <mat-card-subtitle class="flex">
+          <div>
+            <span id="username">{{ chat.username }}</span>
+            <small id="timestamp">
+              <code> (Sent: {{ chat.timestamp | date: "short" }}) </code>
+            </small>
+          </div>
+        </mat-card-subtitle>
+
+        <mat-card-content>
+          <p>{{ chat.message }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <form id="message" [formGroup]="form" (ngSubmit)="onChatSubmit(form.value)">
+    <mat-form-field appearance="outline" class="fw">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="message-input">
+      <mat-label>Enter Chat</mat-label>
+
+      <input matInput formControlName="message" />
+      <button
+        type="submit"
+        matSuffix
+        mat-fab
+        mat-icon-button
+        aria-label="Submit"
+      >
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</main>
