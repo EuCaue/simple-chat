@@ -4,10 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { type FirebaseApp, initializeApp } from 'firebase/app';
 import { Database, getDatabase, onValue, ref, set } from 'firebase/database';
 
-import {
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -43,7 +40,6 @@ type Chat = {
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
-
 export class ChatComponent implements OnInit {
   app: FirebaseApp;
   db: Database;
@@ -51,7 +47,6 @@ export class ChatComponent implements OnInit {
   username: string = '';
   message: string = '';
   chats: Chat[] = [];
-
 
   constructor(private formBuilder: FormBuilder) {
     this.app = initializeApp(environment.firebase);
@@ -73,15 +68,15 @@ export class ChatComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    //  TODO: get this in the correct order
     const chatsRef = ref(this.db, 'chats');
     onValue(chatsRef, (snapshot: any) => {
       const data = snapshot.val();
-      for (let id in data) {
-        if (!this.chats.map((chat) => chat.id).includes(id)) {
-          this.chats.push(data[id]);
-        }
-      }
+      const chatsArray = Object.keys(data).map((id) => ({
+        id,
+        ...data[id],
+      }));
+      chatsArray.sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp));
+      this.chats = chatsArray;
     });
   }
 }
