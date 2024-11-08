@@ -45,3 +45,9 @@ Thumbs.db
 src/environments/environment.ts
 src/environments/environment.development.ts
 src/environments/.env
+
+# Local Netlify folder
+.netlify
+
+# lock file
+/package-lock.json
